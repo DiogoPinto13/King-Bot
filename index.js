@@ -5,12 +5,12 @@ const ms = require('ms');
 
 const ytdl = require("ytdl-core");
 
-const token = 'querias o token? xd estudasses';
+const token = 'querias o token? estudasses xd';
 
 client.commands = new Discord.Collection;
 client.events = new Discord.Collection;
 const PREFIX = '!';     //prefixo 
-var versão = '3.0';
+var versão = '6.0';
 var servers = {};   //lista de reprodução
 var oi=0;
 
@@ -32,7 +32,7 @@ bot.on('guildMemberAdd', member =>{    //boas vindas a novos membros
     const channel = member.guild.channels.cache.find(channel => channel.name === "📒bem-vindo");
     if(!channel) return;
 
-    channel.send(`Bem-vindo ao servidor 👑King, ${member}!`)
+    channel.send(`Bem-vindo ao servidor 👑**King**, ${member}!`);
 });
 
 
@@ -50,7 +50,7 @@ bot.on('message', message =>{
             if(args[1]>0 && args[1]<11){
                 let numerointroduzido = args[1];
                 let ntentativas=3;
-                let numerocerto= Math.floor (Math.random()*(10 - 1 + 1))+1;
+                let numerocerto= Math.floor (Math.random()*10)+1;
                 for(let i= 3; i > 0; i--){
 
                     if(numerointroduzido==numerocerto){
@@ -86,33 +86,51 @@ bot.on('message', message =>{
             message.channel.send({files: ["./gatos/"+numgatos+".jpg"]});
         break;
 
+        case 'arménio':
+            let narmenio = 3;
+            let numarmenio = Math.floor (Math.random()*(narmenio -1 + 1))+1;
+            message.channel.send('Aqui vai fotos do grande campeão! 🏆 ');
+            message.channel.send({files : ["./armenio/"+numarmenio+".png"]});
+        break;
+
         case 'porno':
-        let nimg=3;
-        let numporno= Math.floor (Math.random()*(nimg - 1 + 1))+1;
-        message.channel.send({files: ["./fotos/img"+numporno+".png"]});
+            let nimg=3;
+            let numporno= Math.floor (Math.random()*(nimg - 1 + 1))+1;
+            message.channel.send({files: ["./fotos/img"+numporno+".png"]});
         break;
 
         case 'spam':
-                
-                var spam =setInterval(function(){
 
-                    message.channel.send('☠️Gostas de spam?');
+            let timer = args[2];
+            if(!args[2]){
+                timer = 10;
+            }
+
+            if(timer > 15){
+                message.channel.send("⚠️O máximo de spam é 15 queres matar com spam ou que?");
+                timer = 15;
+            }
+                var spam =setInterval(function(){
+                    
+                    message.channel.send('☠️Gostas de spam? ' + args[1]);
                     oi++;
-                    if(oi==10){
+                    if(oi==timer){
                         clearInterval(spam);
                         oi = 0;
                         //message.channel.send('ola');
                     }
                 }, 1000);
 
+                
+
         break;
 
         case 'ping':
-            message.channel.send('pong!');
+            message.channel.send('🏓pong!');
         break;
 
         case 'olá':
-            message.channel.send('👋ola tudo bem?');
+            message.channel.send('👋olá tudo bem?');
         break;
 
         case 'info':
@@ -121,13 +139,13 @@ bot.on('message', message =>{
             } 
 
             else if(args[1]=== 'autor'){
-                message.channel.send('este bot foi criado por 👑Kingcraft12👑');
+                message.channel.send('este bot foi criado por 👑**Kingcraft12**👑');
             }
 
             else{
                 const info = new Discord.MessageEmbed()
                 .setDescription('**❗️Informações**')
-                .setColor('00CC00')
+                .setColor('FF0000')
                 .addFields(
                     {name: '🤖Versão: ' + versão, value: '---'},
                     {name: 'Autor do Bot: 👑Kingcraft12👑', value: '---'},
@@ -318,11 +336,26 @@ bot.on('message', message =>{
                     message.channel.send('✅ PC do Ferrão hackeado com sucesso!')
                }
 
+               else if(args[1] === 'Bigodes'){
+
+                    setTimeout(function(){
+
+                        message.channel.send('👨‍💻 Hackeando o PC da Bigodes... 0%');
+                        message.channel.send('👨‍💻 Roubando documentos confidenciais... 20%');
+                        message.channel.send('👨‍💻 Alterando as notas... 40%');
+                        message.channel.send('👨‍💻 Hackeando o vibrador da Bigodes... 60%');
+                        message.channel.send('👨‍💻 Colocando o vibrador no modo de perfuração total... 80%');
+                        message.channel.send('👨‍💻 Deletando logs... 100%');
+                        message.channel.send('✅ PC da Bigodes e vibrador hackeados com sucesso! GG');
+
+                    }, 1000);
+               }
+
                else{
                    const hacks = new Discord.MessageEmbed()
                    .setColor('FF000')
                    .setDescription('👨‍💻**Hacking**👨‍💻')
-                   .addFields({name:'**Alvos disponíveis**: \n 1)NASA\n 2)FBI\n 3)CIA\n 4)NSA\n 5)Facebook\n 6)Ferrão', value:'---'});
+                   .addFields({name:'**Alvos disponíveis**: \n 1) NASA\n 2) FBI\n 3) CIA \n 4) NSA\n 5) Facebook\n 6) Ferrão\n 7) Bigodes', value: '\n Escolha um alvo com *!hack (alvo)*'});
                    message.channel.send(hacks);
                }
         break;
@@ -345,6 +378,50 @@ bot.on('message', message =>{
             });
         break;
 
+        case 'sexo':
+            const sexu = new Discord.MessageEmbed()
+            .setColor('FF33E0')
+            .setDescription('**💑 Sexo**')
+            .setImage('https://ichef.bbci.co.uk/news/640/cpsprodpb/145CD/production/_111150438_gettyimages-187321937.jpg')
+            .addFields({name:'🍑 *oh sim dá me mais!!!!!!!*', value:'69'});
+            message.channel.send(sexu);
+
+        break;
+
+        case 'kick':
+            let mentionMember = message.mentions.members.first();
+
+            const kick =  new Discord.MessageEmbed()
+            .setColor('FF0000')
+            .setTitle("⚰️**Kick**⚰️")
+            .setDescription('!kick (alvo) para kickares alguém 🤭');
+
+        
+            if(message.member.roles.cache.some(role => role.name === '👑Admin')){
+                
+
+            if(!args[1]){
+                return message.channel.send(kick);
+            }
+            if(!mentionMember){
+                message.channel.send("😐 Tens que meter um alvo neh...");
+            }
+            if(mentionMember){
+                
+                mentionMember.kick()
+                    .then(() => console.log(`Kicked `))
+                    .catch(console.error);
+                
+                
+            }
+            message.channel.send("🐷 " +args[1] + " Foi com os porcos!");
+        }
+
+        else{
+            message.channel.send('Não tens permissão para kickar essa pessoa!!!');
+            return;
+        }
+        break;
     }
 
 });
