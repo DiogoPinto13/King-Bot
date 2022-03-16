@@ -5,7 +5,7 @@ const ms = require('ms');
 
 const ytdl = require("ytdl-core");
 
-const token = 'querias o token? estudasses xd';
+const token = 'NzQzMDk1MDQ1MjEyNjAyNDE4.XzPrMA.ZKzZ9GESFA4bwmqxZ5s5Kx_Y3Lk';
 
 client.commands = new Discord.Collection;
 client.events = new Discord.Collection;
@@ -36,8 +36,6 @@ bot.on('guildMemberAdd', member =>{    //boas vindas a novos membros
 });
 
 
-
-
 bot.on('message', message =>{
 
     let args = message.content.substring(PREFIX.length).split(" ");
@@ -45,36 +43,81 @@ bot.on('message', message =>{
     switch(args[0]){                 //comandos do bot
 
         case 'advinha':
-            message.channel.send('Escreva um número entre 1 e 10 usando /advinha (numero) para ver se está correto :P');
 
-            if(args[1]>0 && args[1]<11){
-                let numerointroduzido = args[1];
-                let ntentativas=3;
-                let numerocerto= Math.floor (Math.random()*10)+1;
-                for(let i= 3; i > 0; i--){
-
-                    if(numerointroduzido==numerocerto){
-                         message.channel.send('Acertaste!!!!!');
-                    }
-                    else if(numerointroduzido>numerocerto){
-                         message.channel.send('Demasiado grande...');
-                         message.channel.send('Tenta de novo bro');
-                         let numerointroduzido = args[1];
-                         ntentativas--;
-                         message.channel.send('Tentativas restantes: '+ntentativas);
-                    }
-                     else if(numerointroduzido<numerocerto){
-                         message.channel.send('Demasiado pequeno...');
-                         message.channel.send('Tenta de novo bro');
-                         let numerointroduzido = args[1];
-                         ntentativas--;
-                         message.channel.send('Tentativas restantes: '+ntentativas);
-                    }
-                    
-                }
+            if(!args[1]){
+                const advinhainfo = new Discord.MessageEmbed()
+                .setDescription('**ADVINHA NÚMERO**')
+                .setColor('FF0000')
+                .addFields(
+                    {name: '🎮Jogo da advinha🎮', value: 'Escolhe um número entre 1 e 10 e vê se está correto!'},
+                    {name: 'Tens apenas 3 tentativas 😛', value: 'Boa sorte eheh'},
+                    );
+                message.channel.send(advinhainfo);
             }
             else{
-                message.channel.send('Eu disse entre 1 e 10 burro.');
+                let numerointroduzido = args[1];
+                let i = 3;
+                //const filter = (m) => m.author.id === message.author.id;
+                message.channel.send('🎮Escreva um número entre 1 e 10 usando /advinha (numero) para ver se está correto 😛');
+
+                if(numerointroduzido > 0 && numerointroduzido < 11){
+                    let ntentativas=3;
+                    let numerocerto= Math.floor (Math.random()*10)+1;
+                    inicio: for(; i > 0; i--){
+                            /*message.channel
+                            .awaitMessages(filter, { max: 3, time: 5000, errors: ["time"]})
+                            .then((collected) => {
+                                console.log(collected.size);
+                                const msg = collected.first();
+                                console.log(msg.content);
+                                if(msg.content ==numerocerto){
+                                    message.channel.send('✅Acertaste!!!!!');
+                                    message.channel.send('🏆 Ganhas-te o jogo que grande campeão crl! 🏆');
+                                
+                                }
+                                else if(msg.content>numerocerto){
+                                        message.channel.send('❌Demasiado grande...');
+                                        message.channel.send('Tenta de novo bro');
+                                        ntentativas--;
+                                        message.channel.send('Tentativas restantes: '+ntentativas);
+                                }
+                                    else if(msg.content<numerocerto){
+                                        message.channel.send('❌Demasiado pequeno...');
+                                        message.channel.send('Tenta de novo bro');
+                                        numerointroduzido = args[1];
+                                        ntentativas--;
+                                        message.channel.send('Tentativas restantes: '+ntentativas);
+                                }
+                            })
+                            .catch((err) => console.log(err));*/
+                            if(numerointroduzido == numerocerto){
+                                message.channel.send('✅Acertaste!!!!!');
+                                message.channel.send('🏆 Ganhas-te o jogo que grande campeão crl! 🏆');
+                                break;
+                            }
+                            else if(numerointroduzido>numerocerto){
+                                message.channel.send('❌Demasiado grande...');
+                                message.channel.send('Tenta de novo bro');
+                                ntentativas--;
+                                message.channel.send('Tentativas restantes: '+ntentativas);
+                                continue inicio;
+                            }
+                            else if(numerointroduzido<numerocerto){
+                                message.channel.send('❌Demasiado pequeno...');
+                                message.channel.send('Tenta de novo bro');
+                                numerointroduzido = args[1];
+                                ntentativas--;
+                                message.channel.send('Tentativas restantes: '+ntentativas);
+                                continue inicio;
+                            }
+                    }
+                    message.channel.send('⛔️Tentativas esgotadas lmao!');
+                }
+
+                else{
+                    message.channel.send('❌Eu disse entre 1 e 10 burro.');
+                }
+            
             }
             
         break;
@@ -252,7 +295,10 @@ bot.on('message', message =>{
         case 'horas':
             message.channel.send('É hora do show porra!💪💪💪');
         break;
-
+        
+        case 'jonas':
+            message.channel.send('👋Olá campeão Jonas!!!!');
+        break;
         case 'mute':
                 let person = message.guild.member(message.mentions.users.first()|| message.guild.members.cache.get(args[1]));
                 if(!person) return message.reply("💩Não foi possível encontrar esse membro!");
@@ -400,21 +446,21 @@ bot.on('message', message =>{
             if(message.member.roles.cache.some(role => role.name === '👑Admin')){
                 
 
-            if(!args[1]){
-                return message.channel.send(kick);
-            }
-            if(!mentionMember){
-                message.channel.send("😐 Tens que meter um alvo neh...");
-            }
-            if(mentionMember){
-                
-                mentionMember.kick()
-                    .then(() => console.log(`Kicked `))
-                    .catch(console.error);
-                
-                
-            }
-            message.channel.send("🐷 " +args[1] + " Foi com os porcos!");
+                if(!args[1]){
+                    return message.channel.send(kick);
+                }
+                if(!mentionMember){
+                    message.channel.send("😐 Tens que meter um alvo neh...");
+                }
+                if(mentionMember){
+                    
+                    mentionMember.kick()
+                        .then(() => console.log(`Kicked `))
+                        .catch(console.error);
+                    
+                    
+                }
+                message.channel.send("🐷 " +args[1] + " Foi com os porcos!");
         }
 
         else{
@@ -422,6 +468,19 @@ bot.on('message', message =>{
             return;
         }
         break;
+
+        case 'rules':
+            const regras =  new Discord.MessageEmbed()
+            .setColor('1ABC9C')
+            .setTitle("⚠️Rules of the server⚠️")
+            .setThumbnail('https://media.istockphoto.com/photos/frenchman-with-french-baguettes-picture-id108224580?k=20&m=108224580&s=612x612&w=0&h=xVpZq1ArRq_UJJdISrWYMn45lBORs2-3afoY7x5u2KI=')
+            .setDescription('plz read this')
+            .addField('✅ Respect everyone in the server.', '.....')
+            .addField('✅ Have fun in the game :D.', '.....');
+
+            message.channel.send(regras);
+        break;
+        
     }
 
 });
