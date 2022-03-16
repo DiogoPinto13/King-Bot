@@ -5,7 +5,7 @@ const ms = require('ms');
 
 const ytdl = require("ytdl-core");
 
-const token = 'NzQzMDk1MDQ1MjEyNjAyNDE4.XzPrMA.ZKzZ9GESFA4bwmqxZ5s5Kx_Y3Lk';
+const token = 'lol';
 
 client.commands = new Discord.Collection;
 client.events = new Discord.Collection;
